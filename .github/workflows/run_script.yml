@@ -1,11 +1,11 @@
 name: Run Python Script
 
 on:
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-  # Runs automatically at a specific time (e.g., every day at midnight UTC)
+  push:
+    branches: [ main ]
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '*/5 * * * *'
+
 
 jobs:
   build:

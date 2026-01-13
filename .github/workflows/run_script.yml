@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   # Runs automatically at a specific time (e.g., every day at midnight UTC)
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   build:

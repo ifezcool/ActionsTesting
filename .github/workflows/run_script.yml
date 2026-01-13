@@ -1,5 +1,4 @@
 name: Run Python Script
-
 on:
   push:
     branches: [ main ]
@@ -10,23 +9,36 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
+      
+      - name: Install Chrome
+        run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+      
       - name: Install dependencies
         run: |
-          # If you have a requirements.txt, uncomment the line below
-          # pip install -r requirements.txt
-          echo "No dependencies to install for this test."
-
+          pip install -r requirements.txt
+      
       - name: Run script
         env:
-          MY_SECRET_VARIABLE: "Hello from GitHub Actions!"
+          PROCESS_STREET_EMAIL: ${{ secrets.PROCESS_STREET_EMAIL }}
+          PROCESS_STREET_PASSWORD: ${{ secrets.PROCESS_STREET_PASSWORD }}
+          tariff_review: ${{ secrets.TARIFF_REVIEW }}
         run: python main.py
+      
+      - name: Upload downloaded files
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: downloaded-files
+          path: downloads/

@@ -33,7 +33,7 @@ jobs:
         env:
           PROCESS_STREET_EMAIL: ${{ secrets.PROCESS_STREET_EMAIL }}
           PROCESS_STREET_PASSWORD: ${{ secrets.PROCESS_STREET_PASSWORD }}
-          tariff_review: ${{ secrets.TARIFF_REVIEW }}
+          TARIFF_REVIEW: ${{ secrets.TARIFF_REVIEW }}
         run: python main.py
       
       - name: Upload downloaded files

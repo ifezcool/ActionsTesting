@@ -3,9 +3,9 @@ name: Run Python Script
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:  # Keep this so you can run it manually if needed
   schedule:
-    - cron: '*/5 * * * *'
-
+    - cron: '0 */6 * * *' # Runs at minute 0 of every 6th hour (UTC)
 
 jobs:
   build:
